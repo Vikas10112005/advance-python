@@ -1,0 +1,85 @@
+==========================================================
+# Stored Procedure (in)
+==========================================================
+USE college;
+
+DELIMITER &&
+
+CREATE PROCEDURE studentIn(IN c INT)
+BEGIN
+    SELECT * FROM student WHERE id = c;
+END &&
+
+DELIMITER ;
+
+ --- for get-----
+SET @input = 11;
+CALL studentIn(@input);
+
+
+
+==========================================================
+# Stored Procedure (out)
+=========================================================
+
+DELIMITER &&
+
+CREATE PROCEDURE studentOut(OUT c INT)
+BEGIN
+    SELECT rollno INTO c FROM student WHERE id = 7;
+END &&
+
+DELIMITER ;
+
+--- for get----
+
+CALL studentOut(@output);
+SELECT @output;
+
+
+==========================================================  
+# Stored Procedure (inout)
+==========================================================
+DELIMITER &&
+
+CREATE PROCEDURE studentInOut(INOUT c INT)
+BEGIN
+    SELECT rollno INTO c 
+    FROM student 
+    WHERE id = c;
+END &&
+
+DELIMITER ;
+
+
+SET @inout = 1;
+
+CALL studentInOut(@inout);
+SELECT @inout;
+
+
+
+========================================================== 
+# Stored Function
+==========================================================
+
+delimiter &&
+create function square(num int)
+     returns int
+    deterministic
+     begin
+    declare result int;
+     set result = num * num;
+     return result;
+    end &&
+ delimiter ;
+select square(10);
+
+==========================================================
+
+
+
+
+
+
+
